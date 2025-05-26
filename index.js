@@ -15,7 +15,10 @@ const database = require('./config/database');
 const AdminRouter = require('./Router/AdminRouter');
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin:"*",
+    credentials: true,
+}));
 app.use(bodyParser.json());
 
 app.use(fileUpload());
