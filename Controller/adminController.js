@@ -1,10 +1,11 @@
 const ContactUs = require('../Model/contactus');
 const { sendClientEmail, sendCustomerEmail } = require('../utility/EmailNotification/Contactus/emailnotify');
 const { sendtoClientEmail_newParticipants, sendtoCustomerEmail_newParticipants } = require('../utility/EmailNotification/NewParticipants/emailnotify');
-const {sendtoClientEmail_MakeAnEnquiry, sendtoCustomerEmail_MakeAnEnquiry} = require('../utility/EmailNotification/MakeAnEnquiry/emailnotify');
+const {sendtoClientEmail_Makeanenquiry,  sendtoCustomerEmail_Makeanenquiry } = require('../utility/EmailNotification/MakeAnEnquiry/emailnotify');
 const Feedback = require('../Model/feedback');
 const Enquiry = require('../Model/makeAnEnquiry');
 const newParticipants = require('../Model/newParticipants');
+const helpSchema = require('../Model/getHelp');
 
 //CONTACT US FORM
 exports.contactUs = async (req, res) => {
@@ -62,13 +63,14 @@ exports.makeAnEnquiry = async (req, res) => {
         });
         const response = await newEnquiry.save();
         // Send email to the client
-        await sendtoClientEmail_MakeAnEnquiry({
+        await sendtoClientEmail_Makeanenquiry({
             name,
             email,
-            message
+            message,
+            locationofservice
         });
         // Send email to the customer (thank you message)
-        await sendtoCustomerEmail_MakeAnEnquiry({
+        await sendtoCustomerEmail_Makeanenquiry({
             name,
             email
         });
@@ -206,7 +208,7 @@ exports.getHelp = async (req, res) => {
             return res.status(400).json({ message: "Please fill all the fields" });
         }
 
-        const helpRequest = new Help({
+        const helpRequest = new helpSchema({
             name,
             surname,
             email,

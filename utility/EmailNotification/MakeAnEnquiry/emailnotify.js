@@ -1,28 +1,23 @@
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 const {thankYouEmail }= require("../../Templates/thankyou_makeanenquiry");
+const {makeanEnquiryToClient} = require("../../Templates/makeAnenquiryToclient");
+const transporter = require("../Transporter");
 dotenv.config();
 
 // Set up the transporter for sending email
-const transporter = nodemailer.createTransport({
-  service: "gmail", // Use Gmail, or you can use another SMTP service
-  auth: {
-    host: "smtp.gmail.com",
-    user: process.env.MAIL_USER, // Your email address
-    pass: process.env.MAIL_PASSWORD, // Your email password or app password
-  },
-});
 
-const sendtoClientEmail_Makeanenquiry = async ({ firstName, email, message }) => {
+const sendtoClientEmail_Makeanenquiry = async ({ name, email, message,locationofservice }) => {
     await transporter.sendMail({
-      from:`${firstName}. <${email}>`, // Use the name and email of the sender
+      from:`${name}. <${email}>`, // Use the name and email of the sender
       to: 'anubhavkumar768@gmail.com', // client's email address
       subject: "New Make an Enquiry Submission",
-      html: `
-        <h3>name: ${firstName}!</h3>
-        <p>email:${email}</p>
-        <p><strong>message:</strong><br/>${message}</p>
-      `,
+      html: makeanEnquiryToClient(
+        name,
+        email,
+        message,
+        locationofservice,
+      ),
     });
   }
   const sendtoCustomerEmail_Makeanenquiry = async ({ name, email  }) => {

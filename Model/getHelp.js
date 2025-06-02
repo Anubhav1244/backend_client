@@ -26,5 +26,5 @@ const helpSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Help', helpSchema);
-module.exports=helpSchema;
+const Help= mongoose.model('Help', helpSchema);
+module.exports=Help;
