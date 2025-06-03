@@ -7,8 +7,8 @@ dotenv.config();
 
 const sendtoClientEmail_newParticipants = async ({ name, email,userDetails  }) => {
   await transporter.sendMail({
-    from: `${name}. <${email}>`, // Use the name and email of the sender
-    to: "anubhavkumar768@gmail.com", // Client's email address
+    from: process.env.MAIL_USER, // Use the name and email of the sender
+    to: process.env.MAIL_USER, // Client's email address
     subject: "New Participants Submission",
     html: newParticipantstoclient(
         name,
@@ -22,7 +22,7 @@ const sendtoCustomerEmail_newParticipants = async ({ name, email  }) => {
     console.log("Sending thank you email to customer:", email);
     console.log("Customer name:", name);
   await transporter.sendMail({
-    from: "anubhavkumar768@gmail.com", // Your email address
+    from: process.env.MAIL_USER, // Your email address
     to: email, // Customer's email address
     subject: "Thank You for Registering With Us!",
     html: thankYouEmail(
