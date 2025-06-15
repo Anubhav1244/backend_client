@@ -2,6 +2,7 @@ const ContactUs = require('../Model/contactus');
 const { sendClientEmail, sendCustomerEmail } = require('../utility/EmailNotification/Contactus/emailnotify');
 const { sendtoClientEmail_newParticipants, sendtoCustomerEmail_newParticipants } = require('../utility/EmailNotification/NewParticipants/emailnotify');
 const {sendtoClientEmail_Makeanenquiry,  sendtoCustomerEmail_Makeanenquiry } = require('../utility/EmailNotification/MakeAnEnquiry/emailnotify');
+const { sendtoClientEmail_GetHelp, sendtoCustomerEmail_GetHelp } = require('../utility/EmailNotification/GetHelp/emailnotify');
 const Feedback = require('../Model/feedback');
 const Enquiry = require('../Model/makeAnEnquiry');
 const newParticipants = require('../Model/newParticipants');
@@ -26,6 +27,8 @@ exports.contactUs = async (req, res) => {
         await sendClientEmail({
             name,
             email,
+            location,
+            role,
             message
         });
         // Send email to the customer (thank you message)
@@ -123,7 +126,6 @@ exports.feedback = async (req, res) => {
     }
 };
 
-
 //GET FEEDBACK
 exports.getFeedback = async (req, res) => {
     try {
@@ -217,6 +219,20 @@ exports.getHelp = async (req, res) => {
         });
 
         await helpRequest.save();
+        // Send email to the client
+        await sendtoClientEmail_GetHelp({
+            name,
+            email,
+            phone,
+            message,
+        
+        });
+        // Send email to the customer (thank you message)
+        await sendtoCustomerEmail_GetHelp({
+            name,
+            email,
+            
+        });
         return res.status(200).json({
             success: true,
             message: "Help request submitted successfully",

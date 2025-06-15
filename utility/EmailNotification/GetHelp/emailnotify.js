@@ -1,26 +1,27 @@
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 const {thankYouEmail }= require("../../Templates/thankyou_makeanenquiry");
-const {getHe} = require("../../Templates/makeAnenquiryToclient");
+const { getHelpToClient } = require("../../Templates/getHelpToclient");
 const transporter = require("../Transporter");
 dotenv.config();
 
 // Set up the transporter for sending email
 
-const sendtoClientEmail_Makeanenquiry = async ({ name, email, message,locationofservice }) => {
+const sendtoClientEmail_GetHelp = async ({ name, email, phone, message,  }) => {
     await transporter.sendMail({
       from:process.env.MAIL_USER, // Use the name and email of the sender
       to: process.env.MAIL_USER, // client's email address
       subject: "New Make an Enquiry Submission",
-      html: makeanEnquiryToClient(
+      html: getHelpToClient(
         name,
         email,
+        phone,
         message,
-        locationofservice,
+
       ),
     });
   }
-  const sendtoCustomerEmail_Makeanenquiry = async ({ name, email  }) => {
+  const sendtoCustomerEmail_GetHelp = async ({ name, email  }) => {
       console.log("Sending thank you email to customer:", email);
       console.log("Customer name:", name);
     const mailResponse=await transporter.sendMail({
@@ -37,4 +38,4 @@ const sendtoClientEmail_Makeanenquiry = async ({ name, email, message,locationof
   
   };
 
-  module.exports = { sendtoClientEmail_Makeanenquiry, sendtoCustomerEmail_Makeanenquiry  };
+  module.exports = { sendtoClientEmail_GetHelp, sendtoCustomerEmail_GetHelp  };

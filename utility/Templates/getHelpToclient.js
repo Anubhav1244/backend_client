@@ -1,11 +1,10 @@
-exports.contactusToclient =  (name, email, locationofservice, role,message) => {
+exports.getHelpToClient =  (name, email, message, phone ) => {
   const userDetails = {
     Name: name,
     Email: email,
+    Phone: phone,
     Message: message,
-    Location: locationofservice,
-    Role: role,
-    Message: message
+    
   };
 
   const detailRows = Object.entries(userDetails).map(
@@ -101,9 +100,9 @@ return `<!DOCTYPE html>
 <body>
 <div class="container">
     <img src="https://res.cloudinary.com/dpo4msttv/image/upload/v1748150519/abzrxpjnyhf7xbwogv4l.png" alt="logo" class="logo" />
-    <div class="heading">New Enquiry Received</div>
+    <div class="heading">New Get Help Request Received</div>
     <div class="message">
-        <p>A Contact us fourm has been submitted with the following details:</p>
+        <p>A Get help fourm has been submitted with the following details:</p>
     </div>
     
     <table class="details-table">

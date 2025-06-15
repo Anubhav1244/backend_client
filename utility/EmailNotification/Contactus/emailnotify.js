@@ -2,20 +2,22 @@
 const dotenv = require("dotenv");
 const {thankYouEmail }= require("../../Templates/thankyou_contactus");
 const transporter = require("../Transporter")
-const {contactusToClient} = require("../../Templates/contactusToclient");
+const {contactusToclient} = require("../../Templates/contactusToclient");
 dotenv.config();
 // Set up the transporter for sending email
 
 
 // Send email to the client
-const sendClientEmail = async ({ name, email, message }) => {
+const sendClientEmail = async ({ name, email, locationofservice, role, message }) => {
   await transporter.sendMail({
     from: process.env.MAIL_USER, // Use the name and email of the sender
     to: process.env.MAIL_USER, // Client's email address
     subject: "New Contact Us Submission",
-    html: contactusToClient(
+    html: contactusToclient(
       name,
       email,
+      locationofservice,
+      role,
       message
     ),
   });
